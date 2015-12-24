@@ -4,10 +4,12 @@
 from __future__ import print_function
 import functools
 import logging
+
 from logging.handlers import HTTPHandler
 
 
 def track_function_call(func):
+    # When you want to track the developer if some function has been called
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         wrapper.is_called = True
@@ -26,7 +28,7 @@ class Logging(object):
     _srvs = []
 
     @classmethod
-    def init(cls, srvs):
+    def set_services(cls, srvs):
         cls._srvs = srvs
         return cls
 
@@ -85,10 +87,16 @@ class PostLogging(LoggingInterface):
         self._logger.setLevel(logging.DEBUG)
 
     def send_message(self, message):
-        self._logger.debug(message)
+        import json
+
+        data = {
+            'type': 'debug',
+            'msg': message
+        }
+        self._logger.debug(json.dumps(data))
 
     def _set_handler(self, formatter):
-        handler = logging.StreamHandler()
+        handler = HTTPHandler('127.0.0.1:8000', '/message', method='POST')
         handler.setFormatter(formatter)
         return handler
 
@@ -126,11 +134,20 @@ class FileLogging(LoggingInterface):
 if __name__ == '__main__':
     srvStream = StreamLogging()
     srvFile = FileLogging()
+    srvPost = PostLogging()
 
-    my_services = [srvStream, srvFile]
-    Logging.init(srvs=my_services).send('This is a PoC to try my logging service')
+    my_services = [srvStream, srvFile, srvPost]
+    Logging.set_services(srvs=my_services).send('This is a PoC to try my logging service')
     Logging.send('This is another sentence I send')
 
     my_services = [srvFile]
-    Logging.init(srvs=my_services)
+    Logging.set_services(srvs=my_services)
     Logging.send('This is my last message')
+
+    my_services = [srvPost]
+    Logging.set_services(my_services)
+    Logging.send('I send a message')
+
+    my_services = [srvPost, srvFile, srvStream]
+    Logging.set_services(my_services)
+    Logging.send('Some characters: ñÑ%&/()=?¿\ª')
