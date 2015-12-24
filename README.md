@@ -16,7 +16,7 @@ Finally execute the python script:
 
 > python logging_service.py
 
-# Example
+# Example using it as a library
 
 ```python
 import logging_service
