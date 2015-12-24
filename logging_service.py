@@ -11,8 +11,9 @@ METHODS = ['POST', 'GET']
 
 
 __all__ = [
-    'FileLogging','Logging', 'PostLogging', 'StreamLogging'
+    'FileLogging', 'Logging', 'PostLogging', 'StreamLogging'
 ]
+__version__ = '1.0.0'
 
 
 def track_function_call(func):
