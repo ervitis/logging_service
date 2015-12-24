@@ -57,9 +57,9 @@ class StreamLogging(LoggingInterface):
     def __init__(self):
         super(StreamLogging, self).__init__()
         self._logger = logging.getLogger('StreamLogging')
-        self._formater = self._set_formatter()
-        self._handler = self._set_handler(self._formater)
-        self._logger.addHandler(self._handler)
+        formater = self._set_formatter()
+        handler = self._set_handler(formater)
+        self._logger.addHandler(handler)
         self._logger.setLevel(logging.DEBUG)
 
     def send_message(self, message):
@@ -79,9 +79,9 @@ class PostLogging(LoggingInterface):
     def __init__(self):
         super(PostLogging, self).__init__()
         self._logger = logging.getLogger('PostLogging')
-        self._formater = self._set_formatter()
-        self._handler = self._set_handler(self._formater)
-        self._logger.addHandler(self._handler)
+        formater = self._set_formatter()
+        handler = self._set_handler(formater)
+        self._logger.addHandler(handler)
         self._logger.setLevel(logging.DEBUG)
 
     def send_message(self, message):
