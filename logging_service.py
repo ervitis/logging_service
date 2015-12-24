@@ -7,6 +7,8 @@ import logging
 
 from logging.handlers import HTTPHandler
 
+METHODS = ['POST', 'GET']
+
 
 __all__ = [
     'FileLogging','Logging', 'PostLogging', 'StreamLogging'
@@ -27,6 +29,12 @@ class FunctionNotCalledError(Exception):
 
     def __init__(self, message):
         super(FunctionNotCalledError, self).__init__(message)
+
+
+class MethodNotAllowedError(Exception):
+
+    def __init__(self, message):
+        super(MethodNotAllowedError, self).__init__(message)
 
 
 class Logging(object):
@@ -83,8 +91,17 @@ class StreamLogging(LoggingInterface):
 
 class PostLogging(LoggingInterface):
 
-    def __init__(self):
+    def __init__(self, host, port, url_path, method='POST'):
         super(PostLogging, self).__init__()
+        self._host = host
+
+        if isinstance(port, int):
+            port = str(port)
+
+        self._port = port
+        self._url_path = url_path
+        self._method = method
+
         self._logger = logging.getLogger('PostLogging')
         formater = self._set_formatter()
         handler = self._set_handler(formater)
@@ -101,9 +118,18 @@ class PostLogging(LoggingInterface):
         self._logger.debug(json.dumps(data))
 
     def _set_handler(self, formatter):
-        handler = HTTPHandler('127.0.0.1:8000', '/message', method='POST')
+        host = self._host + ':' + self._port
+
+        if not self._check_method_is_valid():
+            raise MethodNotAllowedError('The method %s is not allowed. Use %s' % (self._method, ','.join(METHODS)))
+
+        handler = HTTPHandler(host, self._url_path, method='POST')
         handler.setFormatter(formatter)
         return handler
+
+    def _check_method_is_valid(self):
+        method = self._method.upper()
+        return False if method not in METHODS else True
 
     def _set_formatter(self):
         return logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -111,8 +137,9 @@ class PostLogging(LoggingInterface):
 
 class FileLogging(LoggingInterface):
 
-    def __init__(self):
+    def __init__(self, path_file_name=None):
         super(FileLogging, self).__init__()
+        self._path_file = path_file_name if path_file_name else 'log.log'
         self._logger = logging.getLogger('FileLogging')
         formatter = self._set_formatter()
         handler = self._set_handler(formatter)
@@ -124,9 +151,10 @@ class FileLogging(LoggingInterface):
 
     def _set_handler(self, formatter):
         import os
+
         path = os.path.join(
             os.path.abspath(os.path.dirname(__file__)),
-            'my_log.log'
+            self._path_file
         )
         handler = logging.FileHandler(path)
         handler.setFormatter(formatter)
@@ -139,7 +167,7 @@ class FileLogging(LoggingInterface):
 if __name__ == '__main__':
     srvStream = StreamLogging()
     srvFile = FileLogging()
-    srvPost = PostLogging()
+    srvPost = PostLogging(url_path='/message', host='127.0.0.1', port=8000)
 
     my_services = [srvStream, srvFile, srvPost]
     Logging.set_services(srvs=my_services).send('This is a PoC to try my logging service')
