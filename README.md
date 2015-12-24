@@ -29,4 +29,8 @@ def main():
     services = [srv_file_logging, srv_http_logging]
 
     logging_service.Logging.set_services(services).send('Hello world!')
+
+
+if __name__ == '__main__':
+    main()
 ```
