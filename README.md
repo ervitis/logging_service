@@ -14,4 +14,19 @@ Then start the server. In this case I am using gunicorn:
 
 Finally execute the python script:
 
-> python main.py
+> python logging_service.py
+
+# Example
+
+```python
+import logging_service
+
+
+def main():
+    srv_file_logging = logging_service.FileLogging()
+    srv_http_logging = logging_service.PostLogging()
+
+    services = [srv_file_logging, srv_http_logging]
+
+    logging_service.Logging.set_services(services).send('Hello world!')
+```
