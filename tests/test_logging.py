@@ -49,6 +49,14 @@ class TestLogging(unittest.TestCase):
         with self.assertRaises(logging_service.LevelNotValidError):
             logging_service._raise_level_error_if_not_valid(level)
 
+    def test_level_valid_except_not_raised(self):
+        level = logging_service.DEBUG
+
+        try:
+            logging_service._raise_level_error_if_not_valid(level)
+        except logging_service.LevelNotValidError:
+            self.fail()
+
 
 if __name__ == '__main__':
     unittest.main()
