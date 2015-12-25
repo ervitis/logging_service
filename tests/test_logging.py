@@ -57,6 +57,23 @@ class TestLogging(unittest.TestCase):
         except logging_service.LevelNotValidError:
             self.fail()
 
+    def test_filelogging_formatter(self):
+        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
+
+        formatter = srv_filelogging._set_formatter()
+
+        import logging
+        self.assertIsInstance(formatter, logging.Formatter)
+
+    def test_filelogging_handler(self):
+        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
+
+        formatter = srv_filelogging._set_formatter()
+        handler = srv_filelogging._set_handler(formatter)
+
+        import logging
+        self.assertIsInstance(handler, logging.FileHandler)
+
 
 if __name__ == '__main__':
     unittest.main()
