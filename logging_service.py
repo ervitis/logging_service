@@ -18,9 +18,9 @@ LOGGING_LEVELS = [INFO, DEBUG, WARNING, ERROR]
 
 
 __all__ = [
-    'FileLogging', 'Logging', 'PostLogging', 'StreamLogging'
+    'DEBUG', 'ERROR', 'FileLogging', 'INFO', 'Logging', 'PostLogging', 'StreamLogging', 'WARNING'
 ]
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 
 
 def track_function_call(func):

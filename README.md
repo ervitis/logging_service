@@ -23,8 +23,13 @@ import logging_service
 
 
 def main():
-    srv_file_logging = logging_service.FileLogging()
-    srv_http_logging = logging_service.PostLogging(host='127.0.0.1', port=8000, url_path='/message')
+    srv_file_logging = logging_service.FileLogging(level=logging_service.ERROR)
+    srv_http_logging = logging_service.PostLogging(
+        host='127.0.0.1',
+        port=8000,
+        url_path='/message',
+        level=logging_service.DEBUG
+    )
 
     services = [srv_file_logging, srv_http_logging]
 
