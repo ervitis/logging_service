@@ -20,7 +20,7 @@ LOGGING_LEVELS = [INFO, DEBUG, WARNING, ERROR]
 __all__ = [
     'DEBUG', 'ERROR', 'FileLogging', 'INFO', 'Logging', 'PostLogging', 'StreamLogging', 'WARNING'
 ]
-__version__ = '1.2.3'
+__version__ = '1.2.4'
 
 
 def track_function_call(func):
@@ -39,7 +39,7 @@ def _level_is_valid(level):
 
 def _raise_level_error_if_not_valid(level):
     if not _level_is_valid(level):
-        raise LevelNotValidError('Level %s is not valid, use %s' % (level, ','.join(LOGGING_LEVELS)))
+        raise LevelNotValidError('Level %s is not valid, use %s' % (level, ','.join(str(LOGGING_LEVELS))))
 
 
 class FunctionNotCalledError(Exception):
