@@ -6,7 +6,7 @@ If you want, you can try these scripts using __virtualenv__ before you install t
 
 ## Status
 
-[Build Status](https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token)
+![Build Status](https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token)
 
 ## Try it
 
