@@ -1,12 +1,14 @@
 # Logging service in Python
 
-## Status
-
-[![Build Status](https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token)]
-
 Use this service to send logs using the HTTPHandler, FileSystemHandler and StreamHandler
 
 If you want, you can try these scripts using __virtualenv__ before you install the libraries
+
+## Status
+
+[Build Status](https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token)
+
+## Try it
 
 First install the libraries needed using __pip__
 
@@ -20,7 +22,7 @@ Finally execute the python script:
 
 > python logging_service.py
 
-# Example using it as a library
+## Example using it as a library
 
 ```python
 import logging_service
