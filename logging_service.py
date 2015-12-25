@@ -4,6 +4,7 @@
 from __future__ import print_function
 import functools
 import logging
+import os
 
 from logging.handlers import HTTPHandler
 
@@ -13,7 +14,7 @@ METHODS = ['POST', 'GET']
 __all__ = [
     'FileLogging', 'Logging', 'PostLogging', 'StreamLogging'
 ]
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
 def track_function_call(func):
@@ -151,13 +152,15 @@ class FileLogging(LoggingInterface):
         self._logger.debug(message)
 
     def _set_handler(self, formatter):
-        import os
+        if self._path_file:
+            handler = logging.FileHandler(self._path_file)
+        else:
+            path = os.path.join(
+                os.path.abspath(os.path.dirname(__file__)),
+                self._path_file
+            )
+            handler = logging.FileHandler(path)
 
-        path = os.path.join(
-            os.path.abspath(os.path.dirname(__file__)),
-            self._path_file
-        )
-        handler = logging.FileHandler(path)
         handler.setFormatter(formatter)
         return handler
 
