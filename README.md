@@ -5,8 +5,7 @@ Use this service to send logs using the HTTPHandler, FileSystemHandler and Strea
 If you want, you can try these scripts using __virtualenv__ before you install the libraries
 
 ## Status
-
-![Build Status](https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token)
+[![Circle CI](https://circleci.com/gh/ervitis/logging_service.svg?style=svg)](https://circleci.com/gh/ervitis/logging_service)
 
 ## Try it
 
