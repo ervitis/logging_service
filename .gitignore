@@ -309,4 +309,5 @@ Temporary Items
 
 # Misc
 local
-my_log.log
+*.log
+man

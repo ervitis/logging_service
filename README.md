@@ -40,4 +40,4 @@ if __name__ == '__main__':
     main()
 ```
 
-[MIT LICENSE](./LICENSE):
+[MIT LICENSE](./LICENSE)
