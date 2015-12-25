@@ -1,5 +1,7 @@
 # Logging service in Python
 
+[https://circleci.com/gh/ervitis/logging_service.png?circle-token=:circle-token]
+
 Use this service to send logs using the HTTPHandler, FileSystemHandler and StreamHandler
 
 If you want, you can try these scripts using __virtualenv__ before you install the libraries
