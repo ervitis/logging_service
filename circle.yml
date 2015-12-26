@@ -5,7 +5,6 @@ test:
 dependencies:
   pre:
     - pip install -r requirement_tests.txt
-    - pip install -r requirement_release.txt
 
 deployment:
   production:
