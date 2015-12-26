@@ -5,3 +5,9 @@ test:
 dependencies:
   pre:
     - pip install -r requirement_tests.txt
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./build_tag.sh
