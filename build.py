@@ -5,6 +5,9 @@ import os
 import sh
 from logging_service import __version__ as version
 
+GIT_USER = 'circle-ci'
+GIT_EMAIL = 'vitomarti@gmail.com'
+
 
 def open_file(path):
     return open(path, 'r+')
@@ -12,6 +15,11 @@ def open_file(path):
 
 def get_git(repo_path):
     return sh.git.bake(_cwd=repo_path)
+
+
+def set_user_data_git(git):
+    git('config', '--global', 'user.email', GIT_EMAIL)
+    git('config', '--global', 'user.name', GIT_USER)
 
 
 def main():
@@ -26,6 +34,8 @@ def main():
 
     repo_path = os.path.abspath(os.path.dirname(__file__))
     git = get_git(repo_path)
+
+    set_user_data_git(git)
 
     git('add', '-u')
 
