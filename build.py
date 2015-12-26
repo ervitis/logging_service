@@ -26,7 +26,14 @@ def main():
 
     repo_path = os.path.abspath(os.path.dirname(__file__))
     git = get_git(repo_path)
+
+    git('add', '-u')
+
     new_tag_version = version + '-' + build_version_old
+    feature_message = 'feat: auto tag ' + new_tag_version
+    git('commit', '-m', feature_message)
+    git('push', 'origin', 'master')
+
     git('tag', new_tag_version)
     git('push', 'origin', '--tags')
 
