@@ -26,7 +26,7 @@ def main():
 
     repo_path = os.path.abspath(os.path.dirname(__file__))
     git = get_git(repo_path)
-    new_tag_version = version + '-' + build_version_new
+    new_tag_version = version + '-' + build_version_old
     git('tag', new_tag_version)
     git('push', 'origin', '--tags')
 
