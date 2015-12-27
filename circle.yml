@@ -10,3 +10,5 @@ dependencies:
 deployment:
   default:
     branch: [master]
+    commands:
+      - ./build_tag.sh
