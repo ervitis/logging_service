@@ -1,6 +1,8 @@
 test:
   override:
     - ./execute_tests.sh
+  post:
+    - ./build_tag.sh
 
 dependencies:
   pre:
