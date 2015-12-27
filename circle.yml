@@ -1,10 +1,12 @@
 test:
   override:
     - ./execute_tests.sh
-  post:
-    - ./build_tag.sh
 
 dependencies:
   pre:
     - pip install -r requirement_tests.txt
     - pip install -r requirement_release.txt
+
+deployment:
+  default:
+    branch: [master]
