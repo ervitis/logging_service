@@ -37,7 +37,7 @@ class TestLogging(unittest.TestCase):
         Logging.set_services([test_service])
 
         with self.assertRaises(AttributeError):
-            Logging.send('Hello')
+            Logging.send('Hello', logging_service.DEBUG)
 
     def test_level_valid(self):
         level = logging_service.ERROR
@@ -64,7 +64,7 @@ class TestLogging(unittest.TestCase):
             self.fail()
 
     def test_filelogging_formatter(self):
-        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
+        srv_filelogging = logging_service.FileLogging()
 
         formatter = srv_filelogging._set_formatter()
 
@@ -72,22 +72,13 @@ class TestLogging(unittest.TestCase):
         self.assertIsInstance(formatter, logging.Formatter)
 
     def test_filelogging_handler(self):
-        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
+        srv_filelogging = logging_service.FileLogging()
 
         formatter = srv_filelogging._set_formatter()
         handler = srv_filelogging._set_handler(formatter)
 
         import logging
         self.assertIsInstance(handler, logging.FileHandler)
-
-    def test_change_level(self):
-        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
-
-        self.assertEqual(logging_service.DEBUG, srv_filelogging._level)
-
-        srv_filelogging.set_level(logging_service.ERROR)
-
-        self.assertEqual(logging_service.ERROR, srv_filelogging._level)
 
 
 if __name__ == '__main__':
