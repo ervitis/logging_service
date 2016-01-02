@@ -28,17 +28,16 @@ import logging_service
 
 
 def main():
-    srv_file_logging = logging_service.FileLogging(level=logging_service.ERROR)
+    srv_file_logging = logging_service.FileLogging()
     srv_http_logging = logging_service.PostLogging(
         host='127.0.0.1',
         port=8000,
-        url_path='/message',
-        level=logging_service.DEBUG
+        url_path='/message'
     )
 
     services = [srv_file_logging, srv_http_logging]
 
-    logging_service.Logging.set_services(services).send('Hello world!')
+    logging_service.Logging.set_services(services).send('Hello world!', logging_service.DEBUG)
 
 
 if __name__ == '__main__':
