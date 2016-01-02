@@ -42,6 +42,12 @@ def _raise_level_error_if_not_valid(level):
         raise LevelNotValidError('Level %s is not valid, use %s' % (level, ','.join(str(LOGGING_LEVELS))))
 
 
+def _change_level(level):
+    _raise_level_error_if_not_valid(level)
+
+    logging.getLogger().setLevel(level)
+
+
 class FunctionNotCalledError(Exception):
 
     def __init__(self, message):
@@ -100,7 +106,7 @@ class StreamLogging(LoggingInterface):
         self._logger.addHandler(handler)
 
     def send_message(self, message, level):
-        _raise_level_error_if_not_valid(level)
+        _change_level(level)
 
         self._logger.log(msg=message, level=level)
 
@@ -132,7 +138,7 @@ class PostLogging(LoggingInterface):
         self._logger.addHandler(handler)
 
     def send_message(self, message, level):
-        _raise_level_error_if_not_valid(level)
+        _change_level(level)
 
         import json
 
@@ -171,7 +177,7 @@ class FileLogging(LoggingInterface):
         self._logger.addHandler(handler)
 
     def send_message(self, message, level):
-        _raise_level_error_if_not_valid(level)
+        _change_level(level)
 
         self._logger.log(msg=message, level=level)
 

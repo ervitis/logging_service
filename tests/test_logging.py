@@ -80,6 +80,21 @@ class TestLogging(unittest.TestCase):
         import logging
         self.assertIsInstance(handler, logging.FileHandler)
 
+    def test_level_changed(self):
+        srv_filelogging = logging_service.FileLogging()
+
+        Logging.set_services([srv_filelogging])
+        Logging.send('Hello', logging_service.ERROR)
+
+        logging_service._change_level(logging_service.DEBUG)
+
+        Logging.send('Hello', logging_service.INFO)
+
+        with open('log.log', 'r') as test_file:
+            lines = test_file.readlines()
+            for _ in lines:
+                if 'INFO' in _:
+                    self.assertTrue(True)
 
 if __name__ == '__main__':
     unittest.main()

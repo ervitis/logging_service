@@ -34,6 +34,15 @@ class FunctionalTest(unittest.TestCase):
                 if 'DEBUG' in line:
                     self.assertTrue(True)
 
+        Logging.send('Another message', level=logging_service.INFO)
+
+        with open('log.log', 'r') as my_log_file:
+            lines = my_log_file.readlines()
+
+            for line in lines:
+                if 'INFO' in line:
+                    self.assertTrue(True)
+
 
 if __name__ == '__main__':
     unittest.main()
