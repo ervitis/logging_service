@@ -78,7 +78,8 @@ class Logging(object):
 class LoggingInterface(object):
 
     def __init__(self):
-        pass
+        self._logger = logging.getLogger(__name__)
+        self._level = None
 
     def send_message(self, message):
         raise NotImplementedError
@@ -88,6 +89,9 @@ class LoggingInterface(object):
 
     def _set_formatter(self):
         raise NotImplementedError
+
+    def set_level(self, level):
+        self._level = level
 
 
 class StreamLogging(LoggingInterface):
@@ -114,6 +118,9 @@ class StreamLogging(LoggingInterface):
 
     def _set_formatter(self):
         return logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    def set_level(self, level):
+        super(StreamLogging, self).set_level(level)
 
 
 class PostLogging(LoggingInterface):
@@ -165,6 +172,9 @@ class PostLogging(LoggingInterface):
     def _set_formatter(self):
         return logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+    def set_level(self, level):
+        super(PostLogging, self).set_level(level)
+
 
 class FileLogging(LoggingInterface):
 
@@ -199,6 +209,9 @@ class FileLogging(LoggingInterface):
 
     def _set_formatter(self):
         return logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    def set_level(self, level):
+        super(FileLogging, self).set_level(level)
 
 
 if __name__ == '__main__':

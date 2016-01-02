@@ -2,9 +2,14 @@
 
 
 import unittest
+import os
 
 import logging_service
 from logging_service import Logging
+
+
+def delete_file(file_name):
+    os.remove(file_name)
 
 
 class TestLogging(unittest.TestCase):
@@ -13,7 +18,8 @@ class TestLogging(unittest.TestCase):
         pass
 
     def tearDown(self):
-        pass
+        if os.path.exists('log.log'):
+            delete_file('log.log')
 
     def test_logging_cls(self):
         self.assertIsNotNone(Logging)
@@ -73,6 +79,15 @@ class TestLogging(unittest.TestCase):
 
         import logging
         self.assertIsInstance(handler, logging.FileHandler)
+
+    def test_change_level(self):
+        srv_filelogging = logging_service.FileLogging(level=logging_service.DEBUG)
+
+        self.assertEqual(logging_service.DEBUG, srv_filelogging._level)
+
+        srv_filelogging.set_level(logging_service.ERROR)
+
+        self.assertEqual(logging_service.ERROR, srv_filelogging._level)
 
 
 if __name__ == '__main__':
