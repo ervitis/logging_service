@@ -79,7 +79,7 @@ class LoggingInterface(object):
 
     def __init__(self):
         self._logger = logging.getLogger(__name__)
-        self._level = None
+        self._level = self._logger.level
 
     def send_message(self, message):
         raise NotImplementedError
